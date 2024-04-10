@@ -4,20 +4,21 @@ import numpy as np
 import pickle
 import base64
 
-# Correct paths for the files
-loan_image_path = 'C:/Users/solar7/Downloads/Streamlit1/loan_image.jpg'
-model_path = 'C:/Users/solar7/Downloads/Streamlit1/RF.sav'
-rain_gif_path = 'C:/Users/solar7/Downloads/Streamlit1/6m-rain.gif'
-no_gif_path = 'C:/Users/solar7/Downloads/Streamlit1/green-cola-no.gif'
-data_path = 'C:/Users/solar7/Downloads/Streamlit1/test.csv'  # Corrected to point to the CSV file
+# Correct paths for the files, assuming this script is in the same directory as the files in your repository
+loan_image_path = './loan_image.jpg'
+model_path = './RF.sav'
+rain_gif_path = './6m-rain.gif'
+no_gif_path = './green-cola-no.gif'
+data_path = './test.csv'
 
-# Replace @st.experimental_memo with @st.cache_data
-@st.cache_data
-def get_fvalue(val):    
-    feature_dict = {"No":1, "Yes":2}    
+# Use the correct Streamlit cache decorator as per your version of Streamlit
+# Replace @st.cache_data with @st.cache if needed
+@st.cache(allow_output_mutation=True)
+def get_fvalue(val):
+    feature_dict = {"No":1, "Yes":2}
     return feature_dict.get(val, 0)
 
-def get_value(val, my_dict):    
+def get_value(val, my_dict):
     return my_dict.get(val, 0)
 
 app_mode = st.sidebar.selectbox('Select Page', ['Home', 'Prediction'])
@@ -25,7 +26,7 @@ app_mode = st.sidebar.selectbox('Select Page', ['Home', 'Prediction'])
 if app_mode == 'Home':
     st.title('LOAN PREDICTION APP')
     st.image(loan_image_path)  # Updated path
-    st.markdown('Dataset :')    
+    st.markdown('Dataset :')
     data = pd.read_csv(data_path)  # Updated to use pd.read_csv for a CSV file
     st.write(data.head())
     st.markdown('Applicant Income VS Loan Amount')
